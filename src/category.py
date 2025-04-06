@@ -29,10 +29,13 @@ class Category:
         return product_str
 
     @add_product.setter
-    def add_product(self, product: Product) -> None:
+    def add_product(self, new_product):
         """Добавляет продукт в список продуктов категории"""
-        self.__products.append(product)
-        Category.product_count += 1
+        if isinstance(new_product, Product):
+            self.__products.append(new_product)
+            self.product_count += 1
+        else:
+            raise TypeError
 
     @property
     def add_in_product(self):

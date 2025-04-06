@@ -1,6 +1,13 @@
 from src.category import Category
 
 
+def test_product_init(product):
+    assert product.name == "Samsung Galaxy S23 Ultra"
+    assert product.description == "256GB, Серый цвет, 200MP камера"
+    assert product.price == 180000.0
+    assert product.quantity == 5
+
+
 def test_category_init(category_1, category_2):
     assert category_1.name == "Смартфоны"
     assert category_1.description == (
@@ -18,7 +25,7 @@ def test_category_init(category_1, category_2):
 
 
 def test_category_products_list_property(category_1):
-    assert category_1.products(
+    assert category_1.products == (
         "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт.\n"
         "Iphone 15, 210000.0 руб. Остаток: 8 шт.\n"
     )
