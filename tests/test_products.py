@@ -1,11 +1,12 @@
+import pytest
 from src.products import Product
 
 
-def test_products(first_product):
-    assert first_product.name == "Samsung"
-    assert first_product.description == "256GB, Серый цвет, 200MP камера"
-    assert first_product.price == 180000.0
-    assert first_product.quantity == 5
+def test_products(product):
+    assert product.name == "Samsung Galaxy S23 Ultra"
+    assert product.description == "256GB, Серый цвет, 200MP камера"
+    assert product.price == 180000.0
+    assert product.quantity == 5
 
 
 def test_product_new_product():
@@ -34,3 +35,11 @@ def test_price_setter(capsys, product):
 
     product.price = 0.1
     assert product.price == 0.1
+
+
+def test_product_str(product):
+    assert str(product) == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт."
+
+
+def test_add_product(product, other_product):
+    assert product + other_product == 2580000
