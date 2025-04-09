@@ -3,6 +3,8 @@ import pytest
 from src.category import Category
 from src.products import Product
 from src.product_iterator import ProductIterator
+from src.smartphone import Smartphone
+from src.lawngrass import LawnGrass
 
 
 @pytest.fixture
@@ -43,3 +45,17 @@ def other_product():
 @pytest.fixture
 def product_iterator(category_1):
     return ProductIterator(category_1)
+
+
+@pytest.fixture
+def product_smartphone() -> Smartphone:
+    return Smartphone("Samsung Galaxy S23 Ultra", "S23 Ultra", "256GB, Серый цвет, 200MP камера",
+                      256, 95.5, "Серый", 180000.0, 5
+                      )
+
+
+@pytest.fixture
+def product_grass() -> LawnGrass:
+    return LawnGrass("Газонная трава", "Элитная трава для газона", 500.0, 20,
+                     "Зеленый", "7 дней", "Россия"
+                     )

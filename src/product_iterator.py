@@ -10,6 +10,7 @@ class ProductIterator:
         self.index = 0
         return self
 
+    @property
     def __next__(self):
         if self.index < len(self.category.add_in_product):
             product = self.category.add_in_product[self.index]
