@@ -23,7 +23,7 @@ class Category:
         quantity_sum = 0
         if product in self.__products:
             quantity_sum += product.quantity
-            return f"{self.name}, количество продуктов: {quantity_sum} шт."
+        return f"{self.name}, количество продуктов: {quantity_sum} шт."
 
     @property
     def add_product(self) -> str:
