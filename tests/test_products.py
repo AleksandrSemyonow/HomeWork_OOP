@@ -1,20 +1,45 @@
-def tests_products(first_product, second_product, third_product, fourth_product):
-    assert first_product.name == "Samsung"
-    assert first_product.description == "256GB, Серый цвет, 200MP камера"
-    assert first_product.price == 180000.0
-    assert first_product.quantity == 5
+import pytest
+from src.products import Product
 
-    assert second_product.name == "Iphone 15"
-    assert second_product.description == "512GB, Gray space"
-    assert second_product.price == 210000.0
-    assert second_product.quantity == 8
 
-    assert third_product.name == "55 QLED 4K"
-    assert third_product.description == "Фоновая подсветка"
-    assert third_product.price == 123000.0
-    assert third_product.quantity == 7
+def test_products(product):
+    assert product.name == "Samsung Galaxy S23 Ultra"
+    assert product.description == "256GB, Серый цвет, 200MP камера"
+    assert product.price == 180000.0
+    assert product.quantity == 5
 
-    assert fourth_product.name == "Xiaomi Redmi Note 11"
-    assert fourth_product.description == "1024GB, Синий"
-    assert fourth_product.price == 31000.0
-    assert fourth_product.quantity == 14
+
+def test_product_new_product():
+    product = {"name": "Nokia", "description": "Yellow", "price": 90000.0, "quantity": 10}
+    new_product = Product.new_product(product)
+    assert new_product.name == "Nokia"
+    assert new_product.description == "Yellow"
+    assert new_product.price == 90000.0
+    assert new_product.quantity == 10
+
+
+def test_price_property(product):
+    assert product.price == 180000.0
+
+
+def test_price_setter(capsys, product):
+    product.price = 0
+    message = capsys.readouterr()
+    assert message.out.strip() == "Цена не должна быть нулевая или отрицательная"
+    assert product.price == 180000.0
+
+    product.price = -99999.0
+    message = capsys.readouterr()
+    assert message.out.strip() == "Цена не должна быть нулевая или отрицательная"
+    assert product.price == 180000.0
+
+    product.price = 0.1
+    assert product.price == 0.1
+
+
+def test_product_str(product):
+    assert str(product) == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт."
+
+
+def test_add_product(product, other_product):
+    assert product + other_product == 2580000
