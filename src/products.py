@@ -1,11 +1,47 @@
-class Product:
-    name = str
-    description = str
-    price = int
-    quantity = int
+from typing import Union
+from src.base_product import BaseProduct
+from src.print_mixin import PrintMixin
 
-    def __init__(self, name, description, price, quantity):
+
+class Product(BaseProduct, PrintMixin):
+    """Класс для представления товара"""
+
+    name: str
+    description: str
+    price: float
+    quantity: int
+
+    def __init__(self, name: str, description: str, price: float, quantity: int):
+        """Метод для инициализации экземпляра класса"""
+
         self.name = name
         self.description = description
-        self.price = price
+        self.__price = price
         self.quantity = quantity
+        super().__init__()
+
+    def __str__(self):
+        return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other: "Product"):
+        if type(other) is self.__class__:
+            return self.__price * self.quantity + other.__price * other.quantity
+        raise TypeError
+
+    @classmethod
+    def new_product(cls, product_dict: dict) -> "Product":
+        """Создаёт новый экземпляр класса Product из словаря"""
+        return cls(**product_dict)
+
+    @property
+    def price(self) -> float:
+        """Возвращает цену товара"""
+        return self.__price
+
+    @price.setter
+    def price(self, new_price: float) -> None:
+        """Возвращает сообщение об ошибке, если цена меньше или равна нулю"""
+        if new_price <= 0:
+            print("Цена не должна быть нулевая или отрицательная")
+        else:
+            self.__price = new_price
