@@ -2,7 +2,7 @@ import pytest
 from src.product_iterator import ProductIterator
 
 
-def test_product_iterator(product_iterator):
+def test_product_iterator(product_iterator: ProductIterator):
     iter(product_iterator)
     assert product_iterator.index == 0
     assert next(product_iterator).name == "Samsung Galaxy S23 Ultra"

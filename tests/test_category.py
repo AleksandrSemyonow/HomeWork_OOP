@@ -1,3 +1,5 @@
+import pytest
+
 from src.category import Category
 
 
@@ -39,3 +41,15 @@ def test_category_products_setter(category_1, product):
 
 def test_str_category(product):
     assert str(product) == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт."
+
+
+def test_category_add_product_invalid(category_1: Category) -> None:
+    """Тестируем поведение метода добавления продукта в атрибут products при попытке добавить вместо
+    продукта другой объект - вызываем ошибку"""
+    with pytest.raises(TypeError):
+        category_1.add_product("not a product")
+
+
+def test_middle_price(category_1, category_without_product):
+    assert category_1.middle_price() == 198461.54
+    assert category_without_product.middle_price() == 0

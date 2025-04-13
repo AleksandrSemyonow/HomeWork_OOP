@@ -59,3 +59,12 @@ def product_grass() -> LawnGrass:
     return LawnGrass("Газонная трава", "Элитная трава для газона", 500.0, 20,
                      "Зеленый", "7 дней", "Россия"
                      )
+
+
+@pytest.fixture
+def category_without_product():
+    return Category(
+        name="Смартфоны",
+        description="Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
+        products=[]
+    )
