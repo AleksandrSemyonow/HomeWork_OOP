@@ -1,54 +1,55 @@
-def test_category(
-    first_category,
-    first_product,
-    third_product,
-    second_product,
-    second_category,
-    fourth_product,
-    third_category,
-):
+import pytest
 
-    assert first_category.name == "Смартфоны"
+from src.category import Category
 
-    assert (
-        first_category.description
-        == "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни"
+
+def test_product_init(product):
+    assert product.name == "Samsung Galaxy S23 Ultra"
+    assert product.description == "256GB, Серый цвет, 200MP камера"
+    assert product.price == 180000.0
+    assert product.quantity == 5
+
+
+def test_category_init(category_1, category_2):
+    assert category_1.name == "Смартфоны"
+    assert category_1.description == (
+        "Смартфоны, как средство не только коммуникации, " "но и получения дополнительных функций для удобства жизни"
+    )
+    assert len(category_1.add_in_product) == 2
+
+    assert Category.category_count == 2
+    assert category_1.category_count == 2
+    assert category_2.category_count == 2
+
+    assert category_1.product_count == 3
+    assert category_2.product_count == 3
+    assert Category.product_count == 3
+
+
+def test_category_products_list_property(category_1):
+    assert category_1.add_product == (
+        "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт.\n"
+        "Iphone 15, 210000.0 руб. Остаток: 8 шт.\n"
     )
 
-    assert first_category.products == [first_product, second_product, third_product]
 
-    assert second_category.name == "Телевизоры"
+def test_category_products_setter(category_1, product):
+    assert len(category_1.add_in_product) == 2
+    category_1.add_product = product
+    assert len(category_1.add_in_product) == 3
 
-    assert (
-        second_category.description
-        == "Современный телевизор, который позволяет наслаждаться просмотром, станет вашим другом и помощником"
-    )
 
-    assert second_category.products == [first_product]
+def test_str_category(product):
+    assert str(product) == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт."
 
-    assert third_category.name == "Телевизоры"
 
-    assert (
-        third_category.description
-        == "Современный телевизор, который позволяет наслаждаться просмотром, станет вашим другом и помощником"
-    )
+def test_category_add_product_invalid(category_1: Category) -> None:
+    """Тестируем поведение метода добавления продукта в атрибут products при попытке добавить вместо
+    продукта другой объект - вызываем ошибку"""
+    with pytest.raises(TypeError):
+        category_1.add_product("not a product")
 
-    assert third_category.products == [fourth_product]
 
-    assert len(first_category.products) == 3
-
-    assert len(second_category.products) == 1
-
-    assert len(third_category.products) == 1
-
-    assert first_category.category_count == 5
-
-    assert second_category.category_count == 5
-
-    assert third_category.category_count == 5
-
-    assert first_category.product_count == 3
-
-    assert second_category.product_count == 3
-
-    assert third_category.product_count == 3
+def test_middle_price(category_1, category_without_product):
+    assert category_1.middle_price() == 198461.54
+    assert category_without_product.middle_price() == 0
