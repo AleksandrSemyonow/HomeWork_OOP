@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "homework-oop"
+version = "0.1.0"
+description = ""
+authors = ["User <shurbe96@mail.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pytest = "^8.3.5"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.5"
+pytest-cov = "^6.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
